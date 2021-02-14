@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 set_time_limit(0);
+
+use App\Console\Commands\HelloCommand;
 use App\Console\Commands\InstallCommand;
 use App\Console\Commands\StartCommand;
 use App\Console\Extensions\WPSQLiteApplication;
@@ -27,4 +29,5 @@ foreach ($files as $file) {
 $application = new WPSQLiteApplication("Quick WordPress With SQLite", "v1.0");
 $application->add(new InstallCommand);
 $application->add(new StartCommand);
+$application->add(new HelloCommand);
 $application->run();

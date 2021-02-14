@@ -14,12 +14,13 @@ class HelloCommand extends Command
   {
     $this
       ->setName('hello')
+      ->setHidden(true)
       ->setDescription('Sample hello command');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output)
   {
-    $output->writeln("Hello");
+    $output->writeln(PHP_VERSION_ID);
     $output->writeln(PHP_OS);
     if (PHP_VERSION_ID > 80000) {
       $output->writeln("PHP 8 Detected");
