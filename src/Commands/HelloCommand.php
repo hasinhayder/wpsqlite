@@ -26,8 +26,6 @@ class HelloCommand extends Command
     }else{
       $output->writeln("PHP 5 or 7 Detected");
     }
-
-    // $output->writeln(phpversion('pdo_sqlite'));
     return 1;
   }
 }

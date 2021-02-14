@@ -7,5 +7,5 @@ then
    rm dist/*.phar
 fi
 
-box build
+box compile
 echo 'build complete!'

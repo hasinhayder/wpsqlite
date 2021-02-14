@@ -1,9 +1,8 @@
 #!/usr/bin/env php
 <?php
 set_time_limit(0);
-use App\Console\Commands\HelloCommand;
 use App\Console\Commands\InstallCommand;
-use Symfony\Component\Console\Application;
+use App\Console\Extensions\WPSQLiteApplication;
 
 date_default_timezone_set("UTC");
 
@@ -24,8 +23,6 @@ foreach ($files as $file) {
     }
 }
 
-
-$application = new Application("Quick WordPress With SQLite", "v1.0");
+$application = new WPSQLiteApplication("Quick WordPress With SQLite", "v1.0");
 $application->add(new InstallCommand);
-$application->add(new HelloCommand);
 $application->run();
