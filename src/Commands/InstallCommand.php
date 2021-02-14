@@ -33,7 +33,6 @@ class InstallCommand extends Command
 
     $subdomain = str_replace('.wplocal.xyz', '', $this->ask('Enter SubDomain Name (*.wplocal.xyz without the .wplocal.xyz part): ', self::WPSQLITE_QUESTION_INPUT, "test"));
 
-    $output->writeln($subdomain);
     if (file_exists("{$subdomain}.wplocal.xyz.json")) {
       $start = $this->ask('A WordPress site is already installed with the same subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
 
@@ -43,14 +42,12 @@ class InstallCommand extends Command
       return 1;
     }
 
-    $phpversion = $this->ask('Select your PHP version (defaults to php7)', self::WPSQLITE_QUESTION_CHOICE, "PHP7", ['PHP7', 'PHP8', 'PHP5.6+']);
-    $output->writeln($phpversion);
+    //$phpversion = $this->ask('Select your PHP version (defaults to php7)', self::WPSQLITE_QUESTION_CHOICE, "PHP7", ['PHP7', 'PHP8', 'PHP5.6+']);
+    $phpversion = (PHP_VERSION_ID>=80000)?"PHP8":"PHP7";
 
     $confirmation = $this->ask('This will download 15MB data from https://wordpress.org, do you want to proceed?', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
-    $output->writeln($confirmation);
     if ("yes" == $confirmation) {
 
-      return 1;
       $output->writeln("Downloading the latest version of WordPress. Please Hold");
       $result = file_put_contents("./latest.zip", $this->file_get_contents_ssl("http://wordpress.org/latest.zip"));
       $result = true;
