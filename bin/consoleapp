@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+set_time_limit(0);
+use App\Console\Commands\HelloCommand;
+use App\Console\Commands\InstallCommand;
+use Symfony\Component\Console\Application;
+
+date_default_timezone_set("UTC");
+
+$files = array(
+  __DIR__ . '/../../vendor/autoload.php',
+  __DIR__ . '/../../../../autoload.php',
+  __DIR__ . '/../../../autoload.php',
+  '../vendor/autoload.php',
+  'vendor/autoload.php',  
+);
+
+
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        require $file;
+        define('COMPOSER_INSTALLED', 1);
+        break;
+    }
+}
+
+
+$application = new Application("Quick WordPress With SQLite", "v1.0");
+$application->add(new InstallCommand);
+$application->add(new HelloCommand);
+$application->run();

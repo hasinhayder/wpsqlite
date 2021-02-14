@@ -1,0 +1,22 @@
+{
+  "name": "hasin/wpsqlite",
+  "description": "Create WP SQlite Development Server",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hasin Hayder",
+      "email": "countdraculla@gmail.com"
+    }
+  ],
+  "require": {
+    "symfony/console": "^5.2"
+  },
+  "bin": [
+    "bin/consoleapp"
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\Console\\": "src/"
+    }
+  }
+}
