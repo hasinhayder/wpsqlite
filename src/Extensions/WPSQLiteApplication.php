@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Extensions;
+namespace HasinHayder\WPSQLite\Extensions;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputDefinition;

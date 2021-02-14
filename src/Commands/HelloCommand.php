@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Console\Commands;
+namespace HasinHayder\WPSQLite\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +12,7 @@ class HelloCommand extends Command
     $this
       ->setName('hello')
       ->setHidden(true)
-      ->setDescription('Sample hello command');
+      ->setDescription('');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output)
