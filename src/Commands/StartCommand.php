@@ -26,6 +26,8 @@ class StartCommand extends Command
       } else {
         exec("sudo php -S {$siteName}:80 -t {$siteName}/");
       }
+    }else{
+      $output->writeln("This site doesn't exist");
     }
     return 1;
   }
