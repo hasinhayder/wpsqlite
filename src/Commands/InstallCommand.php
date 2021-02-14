@@ -12,6 +12,13 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class InstallCommand extends Command
 {
+  const WPSQLITE_QUESTION_CONFIRMATION = 1;
+  const WPSQLITE_QUESTION_INPUT = 2;
+  const WPSQLITE_QUESTION_CHOICE = 3;
+
+  private $input;
+  private $output;
+
   protected function configure()
   {
     $this
@@ -21,28 +28,14 @@ class InstallCommand extends Command
 
   protected function execute(InputInterface $input, OutputInterface $output)
   {
+    $this->input = $input;
+    $this->output = $output;
 
+    $subdomain = str_replace('.wplocal.xyz', '', $this->ask('Enter SubDomain Name (*.wplocal.xyz without the .wplocal.xyz part): ', self::WPSQLITE_QUESTION_INPUT, "test"));
 
-
-    $helper = $this->getHelper('question');
-
-
-    $question = new Question(
-      'Enter SubDomain Name (*.wplocal.xyz without the .wplocal.xyz part): ',
-      "test"
-    );
-
-    $subdomain = str_replace('.wplocal.xyz', '', $helper->ask($input, $output, $question));
-
+    $output->writeln($subdomain);
     if (file_exists("{$subdomain}.wplocal.xyz.json")) {
-      $question = new ChoiceQuestion(
-        'A WordPress site is already installed with the same subdomain. Do you want to Start it?',
-        // choices can also be PHP objects that implement __toString() method
-        ['yes', 'no'],
-        0
-      );
-
-      $start = $helper->ask($input, $output, $question);
+      $start = $this->ask('A WordPress site is already installed with the same subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
 
       if ($start == "yes") {
         exec("sudo php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
@@ -50,28 +43,14 @@ class InstallCommand extends Command
       return 1;
     }
 
-    $question = new ChoiceQuestion(
-      'Select your PHP version (defaults to php7)',
-      // choices can also be PHP objects that implement __toString() method
-      ['PHP7', 'PHP8', 'PHP5.6+'],
-      0
-    );
+    $phpversion = $this->ask('Select your PHP version (defaults to php7)', self::WPSQLITE_QUESTION_CHOICE, "PHP7", ['PHP7', 'PHP8', 'PHP5.6+']);
+    $output->writeln($phpversion);
 
-    $phpversion = $helper->ask($input, $output, $question);
-
-    // $output->writeln($subdomain);
-    // $output->writeln($phpversion);
-
-    $question = new ChoiceQuestion(
-      'Do you want to proceed now?',
-      // choices can also be PHP objects that implement __toString() method
-      ['yes', 'no'],
-      0
-    );
-
-    $confirmation = $helper->ask($input, $output, $question);
+    $confirmation = $this->ask('This will download 15MB data from https://wordpress.org, do you want to proceed?', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
+    $output->writeln($confirmation);
     if ("yes" == $confirmation) {
 
+      return 1;
       $output->writeln("Downloading the latest version of WordPress. Please Hold");
       $result = file_put_contents("./latest.zip", $this->file_get_contents_ssl("http://wordpress.org/latest.zip"));
       $result = true;
@@ -85,11 +64,6 @@ class InstallCommand extends Command
           exec("tar -xf ./latest.zip");
         }
         unlink("./latest.zip");
-        // exec("")
-        //rename("./wordpress", "test.wplocal.xyz");
-        // if (PHP_VERSION_ID < 80000) {
-
-
 
         if (is_dir("wordpress")) {
           if ($phpversion == 'PHP7') {
@@ -115,7 +89,7 @@ class InstallCommand extends Command
             0
           );
 
-          $confirmation = $helper->ask($input, $output, $question);
+          $confirmation = $this->ask('WordPress is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
           if ($confirmation == "yes") {
             if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
               exec("php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
@@ -153,5 +127,30 @@ class InstallCommand extends Command
     $result = curl_exec($ch);
     curl_close($ch);
     return $result;
+  }
+
+  private function ask($question, $questionType, $default = "", $options = [])
+  {
+    $helper = $this->getHelper('question');
+    if ($questionType == self::WPSQLITE_QUESTION_INPUT) {
+      $question = new Question(
+        $question,
+        $default
+      );
+    } elseif ($questionType == self::WPSQLITE_QUESTION_CONFIRMATION) {
+      $question = new ChoiceQuestion(
+        $question,
+        ['yes', 'no'],
+        $default
+      );
+    } elseif ($questionType == self::WPSQLITE_QUESTION_CHOICE) {
+      $question = new ChoiceQuestion(
+        $question,
+        $options,
+        $default
+      );
+    }
+    $answer = $helper->ask($this->input, $this->output, $question);
+    return $answer;
   }
 }
