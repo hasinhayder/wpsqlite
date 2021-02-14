@@ -80,13 +80,6 @@ class InstallCommand extends Command
           rename("./wordpress", "./{$subdomain}.wplocal.xyz");
           $this->createSiteInfo($subdomain);
 
-          $question = new ChoiceQuestion(
-            'WordPress is now ready. Do you want to start it?',
-            // choices can also be PHP objects that implement __toString() method
-            ['yes', 'no'],
-            0
-          );
-
           $confirmation = $this->ask('WordPress is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
           if ($confirmation == "yes") {
             if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
