@@ -49,8 +49,9 @@ class InstallCommand extends Command
     if ("yes" == $confirmation) {
 
       $output->writeln("Downloading the latest version of WordPress. Please Hold");
-      $result = file_put_contents("./latest.zip", $this->file_get_contents_ssl("http://wordpress.org/latest.zip"));
-      $result = true;
+      
+      file_put_contents("./latest.zip", $this->file_get_contents_ssl("http://wordpress.org/latest.zip"));
+
       if (file_exists("latest.zip")) {
         $output->writeln("Extracting the zip file");
         if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
