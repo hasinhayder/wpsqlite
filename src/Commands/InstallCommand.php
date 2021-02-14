@@ -67,7 +67,7 @@ class InstallCommand extends Command
           if ($phpversion == 'PHP7') {
             file_put_contents("./wordpress/wp-content/db.php", $this->file_get_contents_ssl("https://raw.githubusercontent.com/aaemnnosttv/wp-sqlite-db/master/src/db.php"));
           } else {
-            file_put_contents("./wordpress/wp-content/db.php", $this->file_get_contents_ssl("http:s//raw.githubusercontent.com/hasinhayder/wp-sqlite-db/master/src/db.php"));
+            file_put_contents("./wordpress/wp-content/db.php", $this->file_get_contents_ssl("https://raw.githubusercontent.com/hasinhayder/wp-sqlite-db/master/src/db.php"));
           }
           rename("./wordpress/wp-config-sample.php", "./wordpress/wp-config.php");
           if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
