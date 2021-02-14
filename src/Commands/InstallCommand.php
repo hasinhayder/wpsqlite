@@ -84,7 +84,7 @@ class InstallCommand extends Command
         } else if (PHP_OS == "Darwin") {
           exec("tar -xf ./latest.zip");
         }
-        unlink("./latest.zip")
+        unlink("./latest.zip");
         // exec("")
         //rename("./wordpress", "test.wplocal.xyz");
         // if (PHP_VERSION_ID < 80000) {
