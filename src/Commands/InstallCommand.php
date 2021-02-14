@@ -70,7 +70,7 @@ class InstallCommand extends Command
           }
           rename("./wordpress/wp-config-sample.php", "./wordpress/wp-config.php");
           if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-            file_put_contents("./wordpress/start.bat", "sudo php -S {$subdomain}.wplocal.xyz:80");
+            file_put_contents("./wordpress/start.bat", "php -S {$subdomain}.wplocal.xyz:80");
           } else {
             file_put_contents("./wordpress/start.sh", "sudo php -S {$subdomain}.wplocal.xyz:80");
           }
