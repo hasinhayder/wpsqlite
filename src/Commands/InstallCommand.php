@@ -83,9 +83,9 @@ class InstallCommand extends Command
           $confirmation = $this->ask('WordPress is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
           if ($confirmation == "yes") {
             if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-              exec("php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
+              passthru("php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
             } else {
-              exec("sudo php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
+              passthru("sudo php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
             }
           }
           return 1;

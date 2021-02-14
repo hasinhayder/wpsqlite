@@ -22,9 +22,9 @@ class StartCommand extends Command
     $siteName = $input->getArgument("name");
     if(file_exists("{$siteName}.json")){
       if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-        exec("php -S {$siteName}:80 -t {$siteName}/");
+        passthru("php -S {$siteName}:80 -t {$siteName}/");
       } else {
-        exec("sudo php -S {$siteName}:80 -t {$siteName}/");
+        passthru("sudo php -S {$siteName}:80 -t {$siteName}/");
       }
     }else{
       $output->writeln("This site doesn't exist");
