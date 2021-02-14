@@ -15,6 +15,6 @@
     ],
     "git-version": "package_version",
     "main": "bin/consoleapp",
-    "output": "dist/consoleapp.phar",
+    "output": "dist/wpsqlite.phar",
     "stub": true
 }

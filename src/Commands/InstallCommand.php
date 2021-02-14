@@ -77,7 +77,14 @@ class InstallCommand extends Command
       $result = true;
       if (file_exists("latest.zip")) {
         $output->writeln("Extracting the zip file");
-        exec("tar -xf ./latest.zip");
+        if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
+          exec("tar -xf ./latest.zip");
+        } else if (PHP_OS == "Linux") {
+          exec("unzip ./latest.zip");
+        } else if (PHP_OS == "Darwin") {
+          exec("tar -xf ./latest.zip");
+        }
+        unlink("./latest.zip")
         // exec("")
         //rename("./wordpress", "test.wplocal.xyz");
         // if (PHP_VERSION_ID < 80000) {
