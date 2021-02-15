@@ -5,3 +5,17 @@ WPSQLite.phar helps you to quickly provision WordPress with SQLite and serve the
 WPSQLite is very handy to quickly provision a development setup without worrying much about managing host entries, installing fat dependencies, and allows you to focus more on the  development. 
 
 ## Installation
+Just open the dist folder, download wpsqlite.phar and put it in your global path or use from local directory, whatever is convenient for you
+
+```sh
+php wpsqlite.phar install
+```
+
+or if you can give execution permission to wpsqlite.phar, rename it as wpsqlite and put it in your global path (like `/usr/sbin/wpsqlite`) and use it like this 
+
+```sh
+wpsqlite install
+```
+
+That's all :)
+
