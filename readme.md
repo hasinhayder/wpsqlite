@@ -21,14 +21,25 @@ wpsqlite install
 
 That's all :)
 
-## Pre Requirement 
-Two extensions, pdo_sqlite and curl extension must be enabled. If you're using *nix based operating systems (Linux, Mac) then just open your php.ini and uncomment the line where it says ```;extension=pdo_sqlite```. Uncomment = remove the semicolon from the beginning of that line, so make it look like ```extension=pdo_sqlite```
+## Pre Requirement (*nix based OS / Linux or Mac)
+Two extensions, pdo_sqlite and curl extension must be enabled. If you're using *nix based operating systems (Linux, Mac) then just open your php.ini and uncomment the line where it says ```;extension=pdo_sqlite```. Uncomment = remove the semicolon from the beginning of that line, so make it look like ```extension=pdo_sqlite```. 
+
+Please also uncomment ```;extension=sqlite3``` and make it look like ```extension=sqlite3```.
 
 Also enable curl. Look for the line ```;extension=curl``` and enable it like this ```extension=curl```
+
+You may need to install sqlite library for your PHP version, for example if you have php8, you may need to install it like this on debian/debian-variants
+
+```sh
+sudo apt install php8.0-sqlite3
+```
+## Pre Requirement (Windows)
 
 If you are using windows, open your php.ini and uncomment the line where it says ```;extension=pdo_sqlite.dll```, just change it to ```extension=pdo_sqlite.dll``` and you're ready.
 
 Also enable curl, Look for the line ```;extension=curl.dll``` and enable it like this ```extension=curl.dll```
+
+Please also uncomment ```;extension=sqlite3.dll``` and make it look like ```extension=sqlite3.dll```.
 ## Create a new site
 
 ```sh
