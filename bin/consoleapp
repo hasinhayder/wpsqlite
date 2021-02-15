@@ -48,7 +48,7 @@ foreach ($files as $file) {
     }
 }
 
-$application = new WPSQLiteApplication("Quick WordPress With SQLite", "v1.0");
+$application = new WPSQLiteApplication("Quick WordPress With SQLite", "v1.01");
 $application->add(new InstallCommand);
 $application->add(new StartCommand);
 $application->add(new HelloCommand);
