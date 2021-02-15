@@ -32,7 +32,7 @@ class InstallCommand extends Command
     $subdomain = str_replace('.wplocal.xyz', '', $this->ask('Enter the SubDomain name (*.wplocal.xyz without the .wplocal.xyz part): ', self::WPSQLITE_QUESTION_INPUT, "test"));
     $domain = "{$subdomain}.wplocal.xyz";
 
-    if (file_exists("{$subdomain}.wplocal.xyz.json")) {
+    if (file_exists("{$domain}.json")) {
       $start = $this->ask('A WordPress site is already installed with this subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
 
       if ($start == "yes") {
