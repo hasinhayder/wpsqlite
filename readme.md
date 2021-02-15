@@ -17,6 +17,8 @@ or if you can give execution permission to wpsqlite.phar, rename it as wpsqlite 
 wpsqlite install
 ```
 
+**Very Important: Make sure to stop any running apache/nginx/other process that is listening on your 80 port first**
+
 That's all :)
 
 ## History
