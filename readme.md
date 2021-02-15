@@ -21,6 +21,37 @@ wpsqlite install
 
 That's all :)
 
+## Pre Requirement 
+Two extensions, pdo_sqlite and curl extension must be enabled. If you're using *nix based operating systems (Linux, Mac) then just open your php.ini and uncomment the line where it says ```;extension=pdo_sqlite```. Uncomment = remove the semicolon from the beginning of that line, so make it look like ```extension=pdo_sqlite```
+
+Also enable curl. Look for the line ```;extension=curl``` and enable it like this ```extension=curl```
+
+If you are using windows, open your php.ini and uncomment the line where it says ```;extension=pdo_sqlite.dll```, just change it to ```extension=pdo_sqlite.dll``` and you're ready.
+
+Also enable curl, Look for the line ```;extension=curl.dll``` and enable it like this ```extension=curl.dll```
+## Create a new site
+
+```sh
+php wpsqlite.phar install
+```
+or 
+
+```sh
+wpsqlite.phar install
+```
+
+## Run a previously installed site
+```sh
+php wpsqlite.phar start <sitename>
+php wpsqlite.phar start abcd.wplocal.xyz
+```
+or 
+
+```sh
+wpsqlite.phar start <sitename>
+wpsqlite.phar start abcd.wplocal.xyz
+```
+
 ## History
 গতকাল সারাদিন আমি একটা ইন্টারেস্টিং প্রজেক্ট নিয়ে কাজ করেছি, সেটা হলো ওয়ার্ডপ্রেস উইথ এস্কিউলাইট। আপনারা জানেন যে ওয়ার্ডপ্রেসের ডেটা স্টোর করতে হলে মাইসিকুয়েল ডেটাবেজ প্রয়োজন ডিফল্টভাবে, সেখানে আপনি চাইলেও অন্য আরডিবিএমএস ব্যবহার করতে পারবেন না। অথচ এস্কিউলাইট ব্যবহার করতে কত্ত ভালো হতো - আপনার মেশিনে আলাদাভাবে ওয়েবসার্ভার বা মাইসিকুয়েল ইনস্টল করা লাগতো না, হোস্ট কনফিগারেশন করা লাগতো না, আপনার পুরো সেটাপটা পোর্টেবল হয়ে যেত - ইনফ্যাক্ট আপনি পেনড্রাইভে একটা পুরোপুরি ফাংশনাল ওয়ার্ডপ্রেস সেটআপ পকেটে নিয়ে ঘুরে বেড়াতে পারতেন, যেকোনো মেশিনে লাগিয়ে সেখানেই ডেভেলপমেন্টের কাজ করতে পারতেন - সুবিধার শেষ নাই, জাস্ট প্লাগ এন্ড প্লে টাইপের ব্যাপারস্যাপার।
 
@@ -32,9 +63,13 @@ That's all :)
 
 ফার নিয়ে আমি আগে কাজ করি নাই, এখানে প্রজেক্ট লেখা একটু ডিফারেন্ট, বিল্ড করাও হ্যাপা - যাইহোক পরশুদিন সন্ধ্যা থেকে এটার উপরে পড়াশোনা শুরু করেছি, গতকাল সন্ধ্যায় লিনাক্স/ম্যাক/উইন্ডোজের জন্য ফার ফাইলটা তৈরি করে ফেলেছি :) আর হোস্ট কনফিগারেশন যাতে আপনার নিজের না করতে হয় সেজন্য wplocal.xyz একটা ডোমেইন কিনেছি এবং এটাতে ওয়াইল্ডকার্ড ডিএনএস ম্যাপিং করেছি যাতে আপনি *.wplocal.xyz এ পিং করলে সবসময় সেটা আপনার লোকালহোস্টে পয়েন্ট করে, মানে ping anything.wplocal.xyz কমান্ড দিলেই সেটা 127.0.0.1 কে পয়েন্ট করবে। 
 
+কমান্ড লাইনের কাজটা করার জন্য সিম্ফোনি কনসোল কম্পোনেন্ট নিয়ে কাজ করতে হয়েছে, ইটা নিয়েও কাজ করি নাই আগে। ফাইলসিস্টেমের ফাংশন গুলো নিয়ে কাজ করতে হয়েছে যেগুলো সাধারণত তেমন ব্যবহার করা হয় না ডেইলি প্রজেক্টে - মোট কথা সেই লেভেলের মজা পেয়েছি পুরো কাজটা করতে গিয়ে 
+
 আজকে এটা সবার জন্য রিলিজ করে দিলাম এখানে https://github.com/hasinhayder/wpsqlite, ব্যবহার কিভাবে করতে হবে বা সোর্স কোড চেক করার জন্য এই রিপোজিটরিতে চলে যাবেন। আপনার অপারেটিং সিস্টেম যাই হোক না কেন, মেশিনে পিএইচপি, পিডিও এস্কিউলাইট এক্সটেনশন আর কার্ল এক্সটেনশন ইনস্টল করা থাকলেই কাজ করবে :) ইউজুয়ালি সবার মেশিনেই এক্সটেনশন গুলো বই ডিফল্ট থাকেই, জাস্ট এনাবল করে নিতে হয় কারো কারো মেশিনে পিএইচপি আইএনআই (php.ini) ফাইল থেকে। 
 
 ফার ফাইল টা গ্লোবাল পাথে রাখেন বা লোকাল পাথে  - এরপর কমান্ড দেন এটা  ’php wpsqlite.phar install’, ব্যাস আপনার পোর্টেবল ওয়ার্ডপ্রেস সেটআপ উইথ এস্কিউলাইট একদম রেডি। এখন পেনড্রাইভেও ওয়ার্ডপ্রেস ইনস্টলেশন পসিবল। ইনস্টল করবেন, পকেটে নিয়ে ঘুরে বেড়াবেন, যেখানে ইচ্ছা, যেই মেশিনে ইচ্ছা সেখানে বসে কাজ করবেন, কি মজা না? 
+
+
 
 
 
