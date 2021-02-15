@@ -36,19 +36,19 @@ class InstallCommand extends Command
       $start = $this->ask('A WordPress site is already installed with this subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
 
       if ($start == "yes") {
-        exec("sudo php -S {$domain}:80 -t {$domain}/");
+        $this->serve($domain);
       }
       return 1;
     }
 
     //$phpversion = $this->ask('Select your PHP version (defaults to php7)', self::WPSQLITE_QUESTION_CHOICE, "PHP7", ['PHP7', 'PHP8', 'PHP5.6+']);
-    $phpversion = (PHP_VERSION_ID>=80000)?"PHP8":"PHP7";
+    $phpversion = (PHP_VERSION_ID >= 80000) ? "PHP8" : "PHP7";
 
     $confirmation = $this->ask('This will download 15MB data from https://wordpress.org, do you want to proceed?', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
     if ("yes" == $confirmation) {
 
       $output->writeln("Downloading the latest version of WordPress. Please Hold");
-      
+
       file_put_contents("./latest.zip", $this->file_get_contents_ssl("https://wordpress.org/latest.zip"));
 
       if (file_exists("latest.zip")) {
@@ -81,13 +81,7 @@ class InstallCommand extends Command
 
           $confirmation = $this->ask('Your WordPress installation is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
           if ($confirmation == "yes") {
-            if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-              passthru("php -S {$domain}:80 -t {$domain}/");
-              //pclose(popen('start /B cmd /C "php -S {$domain}:80 -t {$domain}/ >NUL 2>NUL"', 'r')); //Open in background and release the current process
-            } else {
-              passthru("sudo php -S {$domain}:80 -t {$domain}/");
-              //passthru("sudo php -S {$domain}:80 -t {$domain} > /dev/null 2>/dev/null &"); //Open in background and release the current process
-            }
+            $this->serve($domain);
           }
           return 1;
         }
@@ -144,5 +138,16 @@ class InstallCommand extends Command
     }
     $answer = $helper->ask($this->input, $this->output, $question);
     return $answer;
+  }
+
+  private function serve($domain)
+  {
+    if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
+      passthru("php -S {$domain}:80 -t {$domain}/");
+      //pclose(popen('start /B cmd /C "php -S {$domain}:80 -t {$domain}/ >NUL 2>NUL"', 'r')); //Open in background and release the current process
+    } else {
+      passthru("sudo php -S {$domain}:80 -t {$domain}/");
+      //passthru("sudo php -S {$domain}:80 -t {$domain} > /dev/null 2>/dev/null &"); //Open in background and release the current process
+    }
   }
 }
