@@ -83,8 +83,10 @@ class InstallCommand extends Command
           if ($confirmation == "yes") {
             if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
               passthru("php -S {$domain}:80 -t {$domain}/");
+              //pclose(popen('start /B cmd /C "php -S {$domain}:80 -t {$domain}/ >NUL 2>NUL"', 'r')); //Open in background and release the current process
             } else {
               passthru("sudo php -S {$domain}:80 -t {$domain}/");
+              //passthru("sudo php -S {$domain}:80 -t {$domain} > /dev/null 2>/dev/null &"); //Open in background and release the current process
             }
           }
           return 1;
