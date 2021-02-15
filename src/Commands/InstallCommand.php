@@ -114,8 +114,8 @@ class InstallCommand extends Command
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_REFERER, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3000); // 3 sec.
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10000); // 10 sec.
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5000); // 5 sec.
+    curl_setopt($ch, CURLOPT_TIMEOUT, 100000); // 100 sec.
     $result = curl_exec($ch);
     curl_close($ch);
     return $result;
