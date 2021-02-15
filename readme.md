@@ -63,6 +63,13 @@ wpsqlite.phar start <sitename>
 wpsqlite.phar start abcd.wplocal.xyz
 ```
 
+## Post Installation Requirement
+if you want to install plugins and themes in your freshly installed WordPress site from the admin panel, just open your wp-config.php and add the following line
+
+```php
+define ('FS_METHOD', 'direct');
+```
+
 ## History
 ওয়ার্ডপ্রেস উইথ এস্কিউলাইট (WordPress With SQLite)
 
