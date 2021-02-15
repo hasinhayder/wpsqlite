@@ -21,7 +21,7 @@ class InstallCommand extends Command
   {
     $this
       ->setName('install')
-      ->setDescription('Install WordPress with SQLite');
+      ->setDescription('Install WordPress with SQLite Support');
   }
 
   protected function execute(InputInterface $input, OutputInterface $output)
@@ -29,13 +29,14 @@ class InstallCommand extends Command
     $this->input = $input;
     $this->output = $output;
 
-    $subdomain = str_replace('.wplocal.xyz', '', $this->ask('Enter SubDomain Name (*.wplocal.xyz without the .wplocal.xyz part): ', self::WPSQLITE_QUESTION_INPUT, "test"));
+    $subdomain = str_replace('.wplocal.xyz', '', $this->ask('Enter the SubDomain name (*.wplocal.xyz without the .wplocal.xyz part): ', self::WPSQLITE_QUESTION_INPUT, "test"));
+    $domain = "{$subdomain}.wplocal.xyz";
 
     if (file_exists("{$subdomain}.wplocal.xyz.json")) {
-      $start = $this->ask('A WordPress site is already installed with the same subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
+      $start = $this->ask('A WordPress site is already installed with this subdomain. Do you want to Start it? (yes/no)', self::WPSQLITE_QUESTION_CONFIRMATION, "yes");
 
       if ($start == "yes") {
-        exec("sudo php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
+        exec("sudo php -S {$domain}:80 -t {$domain}/");
       }
       return 1;
     }
@@ -69,21 +70,21 @@ class InstallCommand extends Command
           }
           rename("./wordpress/wp-config-sample.php", "./wordpress/wp-config.php");
           if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-            file_put_contents("./wordpress/start.bat", "php -S {$subdomain}.wplocal.xyz:80");
+            file_put_contents("./wordpress/start.bat", "php -S {$domain}:80");
           } else {
-            file_put_contents("./wordpress/start.sh", "sudo php -S {$subdomain}.wplocal.xyz:80");
+            file_put_contents("./wordpress/start.sh", "sudo php -S {$domain}:80");
           }
 
 
-          rename("./wordpress", "./{$subdomain}.wplocal.xyz");
-          $this->createSiteInfo($subdomain);
+          rename("./wordpress", "./{$domain}");
+          $this->createSiteInfo($domain);
 
-          $confirmation = $this->ask('WordPress is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
+          $confirmation = $this->ask('Your WordPress installation is now ready. Do you want to start it?', self::WPSQLITE_QUESTION_CONFIRMATION, 'yes');
           if ($confirmation == "yes") {
             if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-              passthru("php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
+              passthru("php -S {$domain}:80 -t {$domain}/");
             } else {
-              passthru("sudo php -S {$subdomain}.wplocal.xyz:80 -t {$subdomain}.wplocal.xyz/");
+              passthru("sudo php -S {$domain}:80 -t {$domain}/");
             }
           }
           return 1;
@@ -93,13 +94,13 @@ class InstallCommand extends Command
     return 1;
   }
 
-  private function createSiteInfo($subdomain)
+  private function createSiteInfo($domain)
   {
     $data = [
-      "domain" => "{$subdomain}.wplocal.xyz",
+      "domain" => $domain,
     ];
 
-    file_put_contents("{$subdomain}.wplocal.xyz.json", json_encode($data, JSON_PRETTY_PRINT));
+    file_put_contents("{$domain}.json", json_encode($data, JSON_PRETTY_PRINT));
   }
 
   private function file_get_contents_ssl($url)
