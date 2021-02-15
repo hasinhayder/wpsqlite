@@ -49,18 +49,13 @@ class InstallCommand extends Command
 
       $output->writeln("Downloading the latest version of WordPress. Please Hold");
 
-      file_put_contents("./latest.zip", $this->file_get_contents_ssl("https://wordpress.org/latest.zip"));
+      $fileName = "latest.tar.gz";
+      file_put_contents("./latest.tar.gz", $this->file_get_contents_ssl("https://wordpress.org/{$fileName}"));
 
-      if (file_exists("latest.zip")) {
-        $output->writeln("Extracting the zip file");
-        if (PHP_OS == "WIN32" || PHP_OS == "Windows" || PHP_OS == "WINNT") {
-          exec("tar -xf ./latest.zip");
-        } else if (PHP_OS == "Linux") {
-          exec("unzip ./latest.zip");
-        } else if (PHP_OS == "Darwin") {
-          exec("tar -xf ./latest.zip");
-        }
-        unlink("./latest.zip");
+      if (file_exists($fileName)) {
+        $output->writeln("Extracting the tarball");
+        exec("tar -xf ./{$fileName}");
+        unlink("./{$fileName}");
 
         if (is_dir("wordpress")) {
           if ($phpversion == 'PHP7') {
