@@ -18,6 +18,12 @@ wpsqlite install
 ```
 
 **Very Important: Make sure to stop any running apache/nginx/other process that is listening on your 80 port first**
+**Update /etc/hosts file: You may also need to update hosts file with the created <sitename>**
+  - Open the `/etc/hosts` file name in your machine
+  - Add the following line to the end of the file
+  ```
+  127.0.0.1    <sitename>.wplocal.xyz
+  ```
 
 That's all :)
 
